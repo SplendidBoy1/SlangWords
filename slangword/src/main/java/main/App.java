@@ -1,6 +1,7 @@
 package main;
 
 import java.io.IOException;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -30,7 +31,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Dictionary_Slang dict = new Dictionary_Slang<String, String>();
+        Dictionary_Slang dict = new Dictionary_Slang<String, List<String>>();
         dict.LoadData();
         GridPane root = new GridPane();
         // Search_feature Search_pane = new Search_feature(dict);
@@ -84,6 +85,7 @@ public class App extends Application {
 
         pane_2.setBorder(new Border(new BorderStroke(Color.BLACK, 
             BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT)));
+        pane_2.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         // Create tabs
         // Disable close buttons by setting the content
         // pane_1.add(text_search, 0, 0);

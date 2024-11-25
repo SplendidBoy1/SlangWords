@@ -1,5 +1,6 @@
 package main;
 
+import java.util.List;
 import java.util.Vector;
 
 import javafx.collections.FXCollections;
@@ -25,7 +26,7 @@ class Search_feature extends TabPane{
     private Vector<String> list_defi = new Vector<String>();
     private Vector<String> list_history = new Vector<String>();
 
-    public Search_feature(Dictionary_Slang<String, String> dict){
+    public Search_feature(Dictionary_Slang<String, List<String>> dict){
         //TAB 1
         Tab tab_1 = new Tab("Search Slang");
         Label label_1 = new Label("Search slang word");

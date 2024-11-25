@@ -5,11 +5,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Vector;
-
+import java.util.ArrayList;
 
 class  Dictionary_Slang<K, V> {
-    private Dictionary<K, V> _slang_dict= new Hashtable<>();
+    private Dictionary<K, V> _slang_dict = new Hashtable<>();
 
     public void LoadData() throws IOException{
         // System.out.println("Asfdasdfsf");
@@ -25,21 +26,39 @@ class  Dictionary_Slang<K, V> {
             String each_part[] = line.split("`");
             // System.out.println(each_part[0]);
             // System.out.println(each_part[1]);
-            // System.out.println(line);
-            _slang_dict.put((K)each_part[0].toLowerCase(), (V)each_part[1]);
+            List<String> list;
+            
+            if (_slang_dict.get((K)each_part[0].toLowerCase()) != null) {
+                list = (List)_slang_dict.get((K)each_part[0].toLowerCase());
+                list.add(each_part[1]);
+            } else {
+                list = new ArrayList<String>();
+                list.add(each_part[1]);
+                _slang_dict.put((K)each_part[0].toLowerCase(), (V)list);
+            }
+            // System.out.println(_slang_dict.get((K)each_part[0].toLowerCase()));
+            // _slang_dict.put((K)each_part[0].toLowerCase(), (V)each_part[1]);
+            // System.out.println(_slang_dict.get((K)each_part[0].toLowerCase()));
             line = br.readLine();
         }
 
         // long startTime = System.nanoTime();
         
 
-        _slang_dict.keys().asIterator().forEachRemaining((key -> {
-            // System.out.println(key);
-            String temp = (String)_slang_dict.get(key);
-            if (temp.toLowerCase().contains("today")) {
-                // System.out.println(temp);
-            }
-        }));
+        // _slang_dict.keys().asIterator().forEachRemaining((key -> {
+        //     // System.out.println(key);
+        //     V temp = _slang_dict.get(key);
+        //     ArrayList list = (ArrayList)temp;
+        //     for (int i = 0; i < list.size(); i++){
+        //         //System.out.println(list.get(i));
+        //         if (((String)list.get(i)).toLowerCase().contains("today")){
+        //             System.out.println(list.get(i));
+        //         }
+        //     }
+        //     // if (temp.toLowerCase().contains("today")) {
+        //     //     // System.out.println(temp);
+        //     // }
+        // }));
 
         // System.out.print(_slang_dict.keys());
         // long endTime = System.nanoTime();
@@ -52,9 +71,13 @@ class  Dictionary_Slang<K, V> {
 
     public Vector<String> vector_search(String Search){
         Vector<String> results = new Vector<String>();
-        String temp = (String)_slang_dict.get(Search.toLowerCase());
+        V temp = _slang_dict.get(Search.toLowerCase());
+        ArrayList list = (ArrayList)temp;
+        if (list == null)return results;
+        for (int i = 0; i < list.size(); i++){
+            results.add(((String)list.get(i)));
+        }
         // System.out.print(temp);
-        results.add(temp);
         return results;
     }
 
@@ -62,14 +85,40 @@ class  Dictionary_Slang<K, V> {
         Vector<String> results = new Vector<String>();
         _slang_dict.keys().asIterator().forEachRemaining((key -> {
             // System.out.println(key);
-            String temp = (String)_slang_dict.get(key);
-            if (temp.toLowerCase().contains(Search)) {
-                results.add(key.toString().toUpperCase() + "-" + temp);
-                // System.out.println(temp);
+            ArrayList temp = (ArrayList)_slang_dict.get(key);
+            for (int i = 0; i < temp.size(); i++){
+                if (((String)temp.get(i)).toLowerCase().contains(Search.toLowerCase())) {
+                    results.add(key.toString().toUpperCase() + "-" + temp.get(i));
+                    // System.out.println(temp);
+                }
             }
+            
         }));
         // System.out.print(temp);
         // results.add(temp);
         return results;
+    }
+
+    public Boolean check_exist(String slang){
+        Boolean flag = true;
+        if (_slang_dict.get(slang.toLowerCase()) == null){
+            return false;
+        }
+        return flag;
+    };
+
+    public void add_slang(String slang, String defi){
+        List<String> list;
+        System.out.println(_slang_dict.get(slang));
+        if (_slang_dict.get(slang) != null) {
+            list = new ArrayList<String>();
+            // list = (List)_slang_dict.get((K)slang.toLowerCase());
+            list.add(defi);
+            _slang_dict.put((K)slang.toLowerCase(), (V)list);
+        } else {
+            list = new ArrayList<String>();
+            list.add(defi);
+            _slang_dict.put((K)slang.toLowerCase(), (V)list);
+        }
     }
 }
