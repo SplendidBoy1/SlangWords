@@ -8,6 +8,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 class  Dictionary_Slang<K, V> {
     private Dictionary<K, V> _slang_dict = new Hashtable<>();
@@ -20,6 +22,8 @@ class  Dictionary_Slang<K, V> {
         // Path currentRelativePath = Paths.get("");
         // String s = currentRelativePath.toAbsolutePath().toString();
         // System.out.println("Current absolute path is: " + s);
+        Dictionary<K, V> temp_dict = new Hashtable<>();
+        _slang_dict = temp_dict;
         BufferedReader br = new BufferedReader(new FileReader("slangword/data_input/slang.txt"));
         String line = br.readLine();
         while(line != null){
@@ -110,15 +114,35 @@ class  Dictionary_Slang<K, V> {
     public void add_slang(String slang, String defi){
         List<String> list;
         System.out.println(_slang_dict.get(slang));
-        if (_slang_dict.get(slang) != null) {
-            list = new ArrayList<String>();
-            // list = (List)_slang_dict.get((K)slang.toLowerCase());
-            list.add(defi);
-            _slang_dict.put((K)slang.toLowerCase(), (V)list);
-        } else {
-            list = new ArrayList<String>();
-            list.add(defi);
-            _slang_dict.put((K)slang.toLowerCase(), (V)list);
-        }
+        list = new ArrayList<String>();
+        // list = (List)_slang_dict.get((K)slang.toLowerCase());
+        list.add(defi);
+        _slang_dict.put((K)slang.toLowerCase(), (V)list);
+    }
+
+    public void remove_slang(String slang){
+        _slang_dict.remove(slang);
+    }
+
+    public String get_random_slang(){
+        String resultz = new String("");
+        Random rd = new Random();
+        int randInt = rd.nextInt(_slang_dict.size());
+        // HashMap<K, V> map = _slang_dict;
+        // List<String> keys = new ArrayList<String>(_slang_dict.keySet());
+        Integer index = 0;
+        _slang_dict.keys().asIterator().forEachRemaining((key -> {
+            // System.out.println(key);
+            if (randInt == index){
+                ArrayList temp = (ArrayList)_slang_dict.get(key);
+                for (int i = 0; i < temp.size(); i++){
+                    resultz.replaceAll(resultz, key.toString().toUpperCase() + "-" + temp.get(i));
+                }
+                
+                // return resultz;
+            }
+            
+        }));
+        return resultz;
     }
 }

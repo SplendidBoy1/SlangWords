@@ -17,7 +17,6 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -58,11 +57,12 @@ public class App extends Application {
         // pane_2.setBorder(new Border(new BorderStroke(Color.BLACK, 
         //     BorderStrokeStyle.SOLID, new CornerRadii(20), BorderWidths.DEFAULT)));
 
-        Pane pane_3 = new Pane();
+        TabPane pane_3 = new Quiz_daily(dict);
         ColumnConstraints column1 = new ColumnConstraints();
         pane_3.setBorder(new Border(new BorderStroke(Color.BLACK, 
-            BorderStrokeStyle.SOLID, new CornerRadii(20), BorderWidths.DEFAULT)));
-        pane_3.getChildren().add(label_1);
+            BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT)));
+        pane_3.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        // pane_3.getChildren().add(label_1);
         RowConstraints row1 = new RowConstraints();
         RowConstraints row2 = new RowConstraints();
         row1.setPercentHeight(70);
