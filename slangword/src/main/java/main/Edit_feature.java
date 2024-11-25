@@ -28,15 +28,12 @@ class Edit_feature extends TabPane{
         // System.out.println(dict.check_exist(slang));
         if (dict.check_exist(slang)){
             Dialog<ButtonType> dialog = new Dialog<>();
-            //Setting the title
             dialog.setTitle("HAS SLANG");
             dialog.setContentText("Your new slang has existed in database! Do you want to overwrite or duplicate to slang \"" + slang + "(1)\"?");
             ButtonType type = new ButtonType("CANCEL", ButtonData.CANCEL_CLOSE);
             ButtonType btn_overwrite = new ButtonType("OVERWRITE", ButtonBar.ButtonData.LEFT);
             ButtonType btn_duplicate = new ButtonType("DUPLICATE", ButtonBar.ButtonData.LEFT);
-            //Setting the content of the dialog
-            
-            //Adding buttons to the dialog pane
+
             dialog.getDialogPane().getButtonTypes().setAll(btn_overwrite, btn_duplicate, type);
             dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             // dialog.showAndWait();
@@ -59,15 +56,11 @@ class Edit_feature extends TabPane{
         // System.out.println(dict.check_exist(slang));
         if (dict.check_exist(slang)){
             Dialog<ButtonType> dialog = new Dialog<>();
-            //Setting the title
             dialog.setTitle("HAS SLANG");
             dialog.setContentText("Do you want to delete this slang?");
             ButtonType type = new ButtonType("CANCEL", ButtonData.CANCEL_CLOSE);
             ButtonType btn_confirm = new ButtonType("CONFIRM", ButtonBar.ButtonData.LEFT);
             // ButtonType btn_duplicate = new ButtonType("DUPLICATE", ButtonBar.ButtonData.LEFT);
-            //Setting the content of the dialog
-            
-            //Adding buttons to the dialog pane
             dialog.getDialogPane().getButtonTypes().setAll(btn_confirm, type);
             dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             // dialog.showAndWait();

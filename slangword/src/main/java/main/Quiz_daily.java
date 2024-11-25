@@ -1,18 +1,95 @@
 package main;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 
 class Quiz_daily extends TabPane{
+
+    // private String[] quiz_slang_main;
+    private Vector<Button> answer_set = new Vector<Button>();
+    private String[] quiz_slang_main;
+
+    public void Notificate_Right(Dictionary_Slang<String, List<String>> dict, GridPane pane){
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("HAS SLANG");
+        dialog.setContentText("Your choice is right");
+        ButtonType type = new ButtonType("CANCEL", ButtonData.CANCEL_CLOSE);
+
+        dialog.getDialogPane().getButtonTypes().setAll(type);
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        dialog.showAndWait();
+        answer_set.clear();
+
+        String random_slang_main = dict.get_random_slang(-1);
+        String[] quiz_slang_main = random_slang_main.split("`");
+        Vector<String[]> answer_set_data = new Vector<String[]>();
+        answer_set_data.add(quiz_slang_main);
+        for (int i = 0; i < 3; i++){
+            String random_slang_rand = dict.get_random_slang(Integer.parseInt(quiz_slang_main[0]));
+            String[] split_temp = random_slang_rand.split("`");
+            answer_set_data.add(split_temp);
+        }
+
+        Random rd = new Random();
+        int randInt = 0;
+        //System.out.println(split_2_3.isEmpty());
+        while(answer_set_data.isEmpty() == false){
+            //System.out.println("aaaaaaaaaaaaaaaa");
+            randInt = rd.nextInt(answer_set_data.size());
+            Button temp = new Button(answer_set_data.elementAt(randInt)[2]);
+            answer_set.add(temp);
+            answer_set_data.remove(randInt);
+        }
+
+
+        Label label_main_1 = new Label(quiz_slang_main[1] );
+        label_main_1.setFont(new Font("Arial", 24));
+        label_main_1.setAlignment(Pos.CENTER);
+        label_main_1.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
+        System.out.println(answer_set.elementAt(0).getText());
+        pane.getChildren().clear();
+        pane.add(label_main_1, 0, 0, 2, 1);
+        pane.add(answer_set.elementAt(0), 0, 1);
+        pane.add(answer_set.elementAt(1), 1, 1);
+        pane.add(answer_set.elementAt(2), 0, 2);
+        pane.add(answer_set.elementAt(3), 1, 2);
+
+        for (int i = 0; i < answer_set.size(); i++){
+            //System.err.println("asdfsadf");
+            Button temp = answer_set.elementAt(i);
+            temp.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            temp.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event){
+                    if (temp.getText() == quiz_slang_main[2]){
+                        Notificate_Right(dict, pane);
+                    }
+                }
+            });
+        }
+
+        
+    }
+
     public Quiz_daily(Dictionary_Slang<String, List<String>> dict){
         //TAB 1
         super.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
@@ -26,10 +103,10 @@ class Quiz_daily extends TabPane{
 
         pane_1.setVgap(5);
         
-        label_1.setAlignment(Pos.CENTER);
+        
         label_1.setFont(new Font("Arial", 24));
 
-        label_2.setAlignment(Pos.CENTER);
+        
         label_2.setFont(new Font("Arial", 20));
 
         pane_1.add(label_1, 0, 0);
@@ -59,19 +136,62 @@ class Quiz_daily extends TabPane{
         pane_2.setVgap(10);
 
         String random_slang_main = dict.get_random_slang(-1);
-        String[] split_2 = random_slang.split("`");
-        Vector<String[]> split_2_3 = new Vector<String[]>();
+        quiz_slang_main = random_slang_main.split("`");
+        Vector<String[]> answer_set_data = new Vector<String[]>();
+        answer_set_data.add(quiz_slang_main);
         for (int i = 0; i < 3; i++){
-            String random_slang_rand = dict.get_random_slang(Integer.parseInt(split_2[0]));
+            String random_slang_rand = dict.get_random_slang(Integer.parseInt(quiz_slang_main[0]));
             String[] split_temp = random_slang_rand.split("`");
-            split_2_3.add(split_temp);
+            answer_set_data.add(split_temp);
         }
-        Label label_main_1 = new Label(split_2[1]);
+        Label label_main_1 = new Label(quiz_slang_main[1] );
+        label_main_1.setFont(new Font("Arial", 24));
+        label_main_1.setAlignment(Pos.CENTER);
+        label_main_1.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
-        pane_2.add(label_main_1, 0, 0, 2, 1);
+        // Vector<Button> btn_choice_1 = new Vector<Button>();
+        Random rd = new Random();
+        int randInt = 0;
+        //System.out.println(split_2_3.isEmpty());
+        while(answer_set_data.isEmpty() == false){
+            //System.out.println("aaaaaaaaaaaaaaaa");
+            randInt = rd.nextInt(answer_set_data.size());
+            Button temp = new Button(answer_set_data.elementAt(randInt)[2]);
+            answer_set.add(temp);
+            answer_set_data.remove(randInt);
+        }
+        //System.out.println(answer_set);
+        for (int i = 0; i < answer_set.size(); i++){
+            //System.err.println("asdfsadf");
+            Button temp = answer_set.elementAt(i);
+            temp.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            temp.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event){
+                    if (temp.getText() == quiz_slang_main[2]){
+                        Notificate_Right(dict, pane_2);
+                    }
+                }
+            });
+        }
+
         
-        
+        // btn_choice_1.elementAt(1).setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        // btn_choice_1.elementAt(2).setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        // btn_choice_1.elementAt(3).setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        // for (int i = 0; i < 4; i++){
+        //     System.out.println(btn_choice_1.elementAt(i).toString());
+        //     //btn_choice_1.elementAt(i).toString();
+        // }
+
         pane_2.setAlignment(Pos.TOP_CENTER);
+        pane_2.add(label_main_1, 0, 0, 2, 1);
+        pane_2.add(answer_set.elementAt(0), 0, 1);
+        pane_2.add(answer_set.elementAt(1), 1, 1);
+        pane_2.add(answer_set.elementAt(2), 0, 2);
+        pane_2.add(answer_set.elementAt(3), 1, 2);
+
+        
 
         tab_2.setContent(pane_2);
 
