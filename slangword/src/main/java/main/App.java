@@ -3,15 +3,11 @@ package main;
 import java.io.IOException;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
@@ -22,7 +18,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -44,7 +39,7 @@ public class App extends Application {
         Button btn_edit = new Button("Edit dictionary");
         Button btn_learn = new Button("Learn Slang Word");
         // Search_feature Search = new Search_feature();
-        Edit_feature Edit = new Edit_feature();
+        // Edit_feature Edit = new Edit_feature();
         Label label_1 = new Label("asdfafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         root.setPadding(new Insets(30, 30, 30, 30)); 
         root.setVgap(20); 
@@ -85,17 +80,12 @@ public class App extends Application {
         text_search.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
         // pane_1.setVgap(20);
-        TabPane pane_2 = new TabPane();
-        
+        TabPane pane_2 = new Edit_feature(dict);
+
+        pane_2.setBorder(new Border(new BorderStroke(Color.BLACK, 
+            BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT)));
         // Create tabs
-        Tab tab1 = new Tab("Tab 1", new StackPane());
-        Tab tab2 = new Tab("Tab 2", new StackPane());
-
         // Disable close buttons by setting the content
-        tab1.setGraphic(null);
-        tab2.setGraphic(null);
-
-        pane_2.getTabs().addAll(tab1, tab2);
         // pane_1.add(text_search, 0, 0);
         // pane_1.add(btn_search, 0, 1);
         // pane_1.add(text_search, 0, 2);
@@ -108,18 +98,6 @@ public class App extends Application {
         // pane_2.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         // btn_learn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         scene = new Scene(root, 800, 700);
-        btn_search.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event){
-                // Search.search_UI(stage, scene);
-            }
-        });
-        btn_edit.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event){
-                Edit.edit_UI(stage, scene);
-            }
-        });
         stage.setTitle("Slang Dictionary");
         stage.setScene(scene);
         stage.show();
