@@ -64,7 +64,7 @@ class  Dictionary_Slang<K, V> {
             // System.out.println(key);
             String temp = (String)_slang_dict.get(key);
             if (temp.toLowerCase().contains(Search)) {
-                results.add(temp);
+                results.add(key.toString().toUpperCase() + "-" + temp);
                 // System.out.println(temp);
             }
         }));
