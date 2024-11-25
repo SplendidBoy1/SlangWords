@@ -5,11 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Vector;
 
 
 class  Dictionary_Slang<K, V> {
     private Dictionary<K, V> _slang_dict= new Hashtable<>();
-
 
     public void LoadData() throws IOException{
         // System.out.println("Asfdasdfsf");
@@ -30,22 +30,46 @@ class  Dictionary_Slang<K, V> {
             line = br.readLine();
         }
 
-        long startTime = System.nanoTime();
+        // long startTime = System.nanoTime();
         
 
         _slang_dict.keys().asIterator().forEachRemaining((key -> {
-
+            // System.out.println(key);
             String temp = (String)_slang_dict.get(key);
             if (temp.toLowerCase().contains("today")) {
                 // System.out.println(temp);
             }
         }));
 
-        long endTime = System.nanoTime();
+        // System.out.print(_slang_dict.keys());
+        // long endTime = System.nanoTime();
 
-        long duration = (endTime - startTime);
-        System.out.println(duration);
+        // long duration = (endTime - startTime);
+        // System.out.println(duration);
         // System.out.println(_slang_dict.keys());
         // System.out.println(_slang_dict.get("wtft"));
+    }
+
+    public Vector<String> vector_search(String Search){
+        Vector<String> results = new Vector<String>();
+        String temp = (String)_slang_dict.get(Search.toLowerCase());
+        // System.out.print(temp);
+        results.add(temp);
+        return results;
+    }
+
+    public Vector<String> defi_search(String Search){
+        Vector<String> results = new Vector<String>();
+        _slang_dict.keys().asIterator().forEachRemaining((key -> {
+            // System.out.println(key);
+            String temp = (String)_slang_dict.get(key);
+            if (temp.toLowerCase().contains(Search)) {
+                results.add(temp);
+                // System.out.println(temp);
+            }
+        }));
+        // System.out.print(temp);
+        // results.add(temp);
+        return results;
     }
 }

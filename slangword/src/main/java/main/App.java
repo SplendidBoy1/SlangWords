@@ -7,9 +7,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TabPane.TabClosingPolicy;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -19,6 +22,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -34,27 +38,29 @@ public class App extends Application {
         Dictionary_Slang dict = new Dictionary_Slang<String, String>();
         dict.LoadData();
         GridPane root = new GridPane();
+        // Search_feature Search_pane = new Search_feature(dict);
+
         Button btn_search = new Button("Search Dictionary");
         Button btn_edit = new Button("Edit dictionary");
         Button btn_learn = new Button("Learn Slang Word");
-        Search_feature Search = new Search_feature();
+        // Search_feature Search = new Search_feature();
         Edit_feature Edit = new Edit_feature();
         Label label_1 = new Label("asdfafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        root.setPadding(new Insets(30, 30, 30, 10)); 
+        root.setPadding(new Insets(30, 30, 30, 30)); 
         root.setVgap(20); 
         root.setHgap(20);
-        GridPane pane_1 = new GridPane();
-        pane_1.setGridLinesVisible( true );
-        pane_1.setPadding(new Insets(30, 30, 30, 30));
+        TabPane pane_1 = new Search_feature(dict);
+        // pane_1.setGridLinesVisible( true );
+        // pane_1.setPadding(new Insets(30, 30, 30, 30));
         // root.setGridLinesVisible( true );
         root.getColumnConstraints();
         pane_1.setBorder(new Border(new BorderStroke(Color.BLACK, 
-            BorderStrokeStyle.SOLID, new CornerRadii(20), BorderWidths.DEFAULT)));
-        Pane pane_2 = new Pane();
-        pane_2.getChildren().add(btn_edit);
+            BorderStrokeStyle.SOLID, new CornerRadii(0), BorderWidths.DEFAULT)));
+        // Pane pane_2 = new Pane();
+        // pane_2.getChildren().add(btn_edit);
         // root.setAlignment(Pos.TOP_CENTER);
-        pane_2.setBorder(new Border(new BorderStroke(Color.BLACK, 
-            BorderStrokeStyle.SOLID, new CornerRadii(20), BorderWidths.DEFAULT)));
+        // pane_2.setBorder(new Border(new BorderStroke(Color.BLACK, 
+        //     BorderStrokeStyle.SOLID, new CornerRadii(20), BorderWidths.DEFAULT)));
 
         Pane pane_3 = new Pane();
         ColumnConstraints column1 = new ColumnConstraints();
@@ -74,17 +80,25 @@ public class App extends Application {
         pane_1.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         ColumnConstraints col_max = new ColumnConstraints();
         col_max.setPercentWidth(100);
-        pane_1.getColumnConstraints().add(col_max);
+        // pane_1.getColumnConstraints().add(col_max);
         TextField text_search = new TextField();    
         text_search.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
-        pane_1.setVgap(20);
+        // pane_1.setVgap(20);
+        TabPane pane_2 = new TabPane();
+        
+        // Create tabs
+        Tab tab1 = new Tab("Tab 1", new StackPane());
+        Tab tab2 = new Tab("Tab 2", new StackPane());
 
-        pane_1.add(text_search, 0, 0);
-        pane_1.add(btn_search, 0, 1);
+        // Disable close buttons by setting the content
+        tab1.setGraphic(null);
+        tab2.setGraphic(null);
+
+        pane_2.getTabs().addAll(tab1, tab2);
+        // pane_1.add(text_search, 0, 0);
+        // pane_1.add(btn_search, 0, 1);
         // pane_1.add(text_search, 0, 2);
-
-
 
         root.add(pane_1, 0, 0);
         root.add(pane_2, 1, 0);
@@ -93,11 +107,11 @@ public class App extends Application {
         pane_3.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         // pane_2.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         // btn_learn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        scene = new Scene(root, 700, 600);
+        scene = new Scene(root, 800, 700);
         btn_search.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event){
-                Search.search_UI(stage, scene);
+                // Search.search_UI(stage, scene);
             }
         });
         btn_edit.setOnAction(new EventHandler<ActionEvent>() {
