@@ -124,25 +124,27 @@ class  Dictionary_Slang<K, V> {
         _slang_dict.remove(slang);
     }
 
-    public String get_random_slang(){
+    public String get_random_slang(Integer index){
         String resultz = new String("");
-        Random rd = new Random();
-        int randInt = rd.nextInt(_slang_dict.size());
-        // HashMap<K, V> map = _slang_dict;
-        // List<String> keys = new ArrayList<String>(_slang_dict.keySet());
-        Integer index = 0;
+        Vector<String> str_vec = new Vector<String>();
         _slang_dict.keys().asIterator().forEachRemaining((key -> {
             // System.out.println(key);
-            if (randInt == index){
-                ArrayList temp = (ArrayList)_slang_dict.get(key);
-                for (int i = 0; i < temp.size(); i++){
-                    resultz.replaceAll(resultz, key.toString().toUpperCase() + "-" + temp.get(i));
-                }
-                
-                // return resultz;
-            }
+            str_vec.add((String)key);
             
         }));
+        Random rd = new Random();
+        int randInt = rd.nextInt(_slang_dict.size());
+        while (randInt == index)randInt = rd.nextInt(_slang_dict.size());
+        String key = str_vec.elementAt(randInt);
+        ArrayList temp = (ArrayList)_slang_dict.get(key);
+        for (int i = 0; i < temp.size(); i++){
+            resultz = randInt + "`" + key.toUpperCase() + "`" + temp.get(i);
+        }
+        //resultz = key + "`" + _slang_dict.get(key);
+        // HashMap<K, V> map = _slang_dict;
+        // List<String> keys = new ArrayList<String>(_slang_dict.keySet());
+        // Integer index = 0;
+        
         return resultz;
     }
 }
