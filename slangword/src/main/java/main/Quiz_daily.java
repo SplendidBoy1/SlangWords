@@ -27,6 +27,10 @@ class Quiz_daily extends TabPane{
     private Vector<Button> answer_set = new Vector<Button>();
     private String[] quiz_slang_main;
 
+    private Vector<Button> answer_set_2 = new Vector<Button>();
+    private String[] quiz_slang_main_2;
+
+
     public void Notificate_Right(Dictionary_Slang<String, List<String>> dict, GridPane pane){
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("HAS SLANG");
@@ -65,7 +69,7 @@ class Quiz_daily extends TabPane{
         label_main_1.setAlignment(Pos.CENTER);
         label_main_1.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
-        System.out.println(answer_set.elementAt(0).getText());
+        //System.out.println(answer_set.elementAt(0).getText());
         pane.getChildren().clear();
         pane.add(label_main_1, 0, 0, 2, 1);
         pane.add(answer_set.elementAt(0), 0, 1);
@@ -87,6 +91,68 @@ class Quiz_daily extends TabPane{
             });
         }
 
+        
+    }
+
+    public void Notificate_Right_2(Dictionary_Slang<String, List<String>> dict, GridPane pane){
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("HAS SLANG");
+        dialog.setContentText("Your choice is right");
+        ButtonType type = new ButtonType("CANCEL", ButtonData.CANCEL_CLOSE);
+
+        dialog.getDialogPane().getButtonTypes().setAll(type);
+        dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        dialog.showAndWait();
+        answer_set.clear();
+
+        String random_slang_main_2 = dict.get_random_slang(-1);
+        quiz_slang_main_2 = random_slang_main_2.split("`");
+        Vector<String[]> answer_set_data_2 = new Vector<String[]>();
+        answer_set_data_2.add(quiz_slang_main_2);
+        for (int i = 0; i < 3; i++){
+            String random_slang_rand_2 = dict.get_random_slang(Integer.parseInt(quiz_slang_main_2[0]));
+            String[] split_temp = random_slang_rand_2.split("`");
+            answer_set_data_2.add(split_temp);
+        }
+        Label label_main_2 = new Label(quiz_slang_main_2[2] );
+        label_main_2.setFont(new Font("Arial", 24));
+        label_main_2.setAlignment(Pos.CENTER);
+        label_main_2.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
+        answer_set_2.clear();
+
+        Random rd_2 = new Random();
+        int randInt_2 = 0;
+        //System.out.println(split_2_3.isEmpty());
+        while(answer_set_data_2.isEmpty() == false){
+            //System.out.println("aaaaaaaaaaaaaaaa");
+            randInt_2 = rd_2.nextInt(answer_set_data_2.size());
+            Button temp = new Button(answer_set_data_2.elementAt(randInt_2)[1]);
+            answer_set_2.add(temp);
+            answer_set_data_2.remove(randInt_2);
+        }
+        //System.out.println(answer_set);
+        for (int i = 0; i < answer_set_2.size(); i++){
+            //System.err.println("asdfsadf");
+            Button temp = answer_set_2.elementAt(i);
+            temp.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            temp.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event){
+                    if (temp.getText() == quiz_slang_main_2[1]){
+                        Notificate_Right_2(dict, pane);
+                    }
+                }
+            });
+        }
+
+        pane.getChildren().clear();
+        pane.setAlignment(Pos.TOP_CENTER);
+        pane.add(label_main_2, 0, 0, 2, 1);
+        pane.add(answer_set_2.elementAt(0), 0, 1);
+        pane.add(answer_set_2.elementAt(1), 1, 1);
+        pane.add(answer_set_2.elementAt(2), 0, 2);
+        pane.add(answer_set_2.elementAt(3), 1, 2);
         
     }
 
@@ -205,9 +271,65 @@ class Quiz_daily extends TabPane{
 
         GridPane pane_3 = new GridPane();
 
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setPercentWidth(50);
+
+        pane_3.getColumnConstraints().add(column1);
+        pane_3.getColumnConstraints().add(column1);
+
         pane_3.setPadding(new Insets(30, 30, 30, 30));
 
         pane_3.setVgap(10);
+
+        String random_slang_main_2 = dict.get_random_slang(-1);
+        quiz_slang_main_2 = random_slang_main_2.split("`");
+        Vector<String[]> answer_set_data_2 = new Vector<String[]>();
+        answer_set_data_2.add(quiz_slang_main_2);
+        for (int i = 0; i < 3; i++){
+            String random_slang_rand_2 = dict.get_random_slang(Integer.parseInt(quiz_slang_main_2[0]));
+            String[] split_temp = random_slang_rand_2.split("`");
+            answer_set_data_2.add(split_temp);
+        }
+        Label label_main_2 = new Label(quiz_slang_main_2[2] );
+        label_main_2.setFont(new Font("Arial", 24));
+        label_main_2.setAlignment(Pos.CENTER);
+        label_main_2.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
+        Random rd_2 = new Random();
+        int randInt_2 = 0;
+        //System.out.println(split_2_3.isEmpty());
+        while(answer_set_data_2.isEmpty() == false){
+            //System.out.println("aaaaaaaaaaaaaaaa");
+            randInt_2 = rd_2.nextInt(answer_set_data_2.size());
+            Button temp = new Button(answer_set_data_2.elementAt(randInt_2)[1]);
+            answer_set_2.add(temp);
+            answer_set_data_2.remove(randInt_2);
+        }
+        //System.out.println(answer_set);
+        for (int i = 0; i < answer_set_2.size(); i++){
+            //System.err.println("asdfsadf");
+            Button temp = answer_set_2.elementAt(i);
+            temp.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            temp.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event){
+                    if (temp.getText() == quiz_slang_main_2[1]){
+                        Notificate_Right_2(dict, pane_3);
+                    }
+                }
+            });
+        }
+
+        pane_3.setAlignment(Pos.TOP_CENTER);
+        pane_3.add(label_main_2, 0, 0, 2, 1);
+        pane_3.add(answer_set_2.elementAt(0), 0, 1);
+        pane_3.add(answer_set_2.elementAt(1), 1, 1);
+        pane_3.add(answer_set_2.elementAt(2), 0, 2);
+        pane_3.add(answer_set_2.elementAt(3), 1, 2);
+
+        // pane_3.setPadding(new Insets(30, 30, 30, 30));
+
+        // pane_3.setVgap(10);
 
         tab_3.setContent(pane_3);
 
